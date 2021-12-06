@@ -75,6 +75,9 @@ describe('Watanimall add to cart scenario', () => {
 
     });
 
+    it('Verify navigating to the second product', () => {
+      cy.get('div.shop-products-holder div.product-col:nth-child(2)').click();
+    });
   })
 
 })
