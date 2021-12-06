@@ -26,6 +26,20 @@ describe('Watanimall add to cart scenario', () => {
     });
   });
 
-  
+  context('Monitor category test suite', () => {
+    it('Verify navigating to monitor category from the list', () => {
+      cy.get('#main div.category-row div a[href*=monitors]').should('contain', categoryName);
+      cy.get('#main div.category-row div a[href*=monitors]').click();
+      cy.url().should('include', 'product-category/monitors');
+      cy.get('#main div.shop-header h1').should('contain', categoryName)
+      // cy.get('#main div.category-row div a[href*=monitors]').should('contain', 'MONITORS').realHover().then(el => {
+      //   expect(el.children('span')).to.have.css('color', 'rgb(245, 140, 13)');  
+      // });
+
+      // cy.get('#main div.category-row div a[href*=monitors] span.category-name').should('have.css', 'color', '#f58c0d');
+      // cy.get('#main div.category-row a[href*=monitors]').realHover().should('have.css', 'box-shadow', '0 18px 50px 0 #e6e7ed');
+
+    });
+  })
 
 })
