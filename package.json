@@ -1,0 +1,24 @@
+{
+  "name": "watanimall",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waleedafifi90/watanimall.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/waleedafifi90/watanimall/issues"
+  },
+  "homepage": "https://github.com/waleedafifi90/watanimall#readme",
+  "dependencies": {
+    "cypress": "^9.1.1",
+    "cypress-real-events": "^1.6.0"
+  }
+}
