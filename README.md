@@ -1,1 +1,41 @@
 # watanimall
+
+This repo will allow you to check if the functionallity of the Watanimall working without problems.
+
+Also there some of the assertion to check the style like the hover
+
+## Requirentments
+- Node js
+- Cypress
+- Chrome browser
+  
+### How to start using this script
+```javascript
+git clone https://github.com/waleedafifi90/watanimall.git
+
+// Once it finish open it using terminal and do
+npm install
+```
+
+**To run the cypress runner**
+```javascript
+npx cypress open
+```
+
+to do update on the test file follow the path to find all of the test cases
+```
+cypress/integration/watanimall-addToCart.spec.js
+```
+
+### Test cases covered by this app
+- Navigate to Category page from the navigation bar
+- Check the hover style on the Monitor card
+- Click on the Monitor card and check the url
+- Filter the result based on the Manufacture and the price
+- Hover over the first product and check if the button are exsits
+- Click on the add to cart from the hover effect and check the total price of the side cart
+- Close the side cart
+- Click on the second product card and check the redirect to detaild page
+- Ckech the name of the product in the details page
+- Increase the quantity using the buttons and add the product to cart
+- check the cart in the header if had 3 items and then delete one item from the cart
