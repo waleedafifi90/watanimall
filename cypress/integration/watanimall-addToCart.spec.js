@@ -59,12 +59,19 @@ describe('Watanimall add to cart scenario', () => {
     it('Verify filtring the list based on ASUS category', () => {
       cy.get('div[data-name="manufacturer"] div[data-value="asus"]').should('contain', manufacturerName);
       cy.get('div[data-name="manufacturer"] div[data-value="asus"] span').invoke('text').as('categoryCount');
+
+      cy.get('div[data-name="monitor_size_in_inches"] span').invoke('text').as('monitorSize');
+
       cy.get('div[data-name="manufacturer"] div[data-value="asus"]').click();
       
       cy.get('@categoryCount').then(ele => {
         cy.get('div.products-row div.product-col').should('have.length', parseFloat(ele.replace(/[()]/g, "").trim()))
       })
       
+      cy.get('@monitorSize').then(size => {
+        cy.get('div[data-name="monitor_size_in_inches"] span').invoke('text').should('not.equal', size);
+      })
+
       cy.get('div[data-name="manufacturer"] div[data-value="asus"]').should('have.class', 'checked');
       cy.get('div.shop-products-holder div.loader').should('have.class', 'hidden');
       cy.get('div.shop-products-holder div.product-col').should('contain', manufacturerName);
@@ -85,13 +92,17 @@ describe('Watanimall add to cart scenario', () => {
   
     it('Verify add the product to cart ', () => {
       
-      cy.get('div.products-row div.product-col bdi').then(ele => {
+      cy.get('div.products-row div.product-col div.product-price').children().not('del').find('bdi').then(ele => {
         const unsortedItems = ele.map((index, el) =>  Cypress.$(el).text().substr(1).trim().replace(/,/g, '')).get();
         const sortedItems = unsortedItems.slice().sort((a, b) => parseFloat(a) - parseFloat(b));
         expect(sortedItems, 'Items are sorted').to.deep.equal(unsortedItems);
       });
 
       cy.get('div.shop-products-holder div.product-col:first-child div.product-item').realHover().children('div.btn-cart-wrap').should('be.visible');
+      // cy.get('div.shop-products-holder div.product-col:first-child div.product-item div.btn-cart-wrap a.btn-add-cart').as('addToCart');
+      // cy.get('@addToCart').realHover();
+      // cy.get('@addToCart').should('have.css', 'background', 'rgb(245, 140, 13) none repeat scroll 0% 0% / auto padding-box border-box')
+
       cy.get('div.shop-products-holder div.product-col:nth-child(1) div.product-item div.btn-cart-wrap a.btn-add-cart').click();
       cy.totalPrice(currency);
       cy.get('div.header-mini-cart a.cart-close').click();
