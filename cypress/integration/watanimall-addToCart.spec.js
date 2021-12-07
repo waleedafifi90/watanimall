@@ -24,9 +24,16 @@ describe('Watanimall add to cart scenario', () => {
 
   context('Navigate to all category from header nav', () => {
     it('Verify the cart is empty', () => {
+      cy.get('.btn-cart > .counter')
+        .should('have.css', 'background-color', 'rgb(245, 140, 13)')
+        .and('have.css', 'color', 'rgb(255, 255, 255)');
       cy.get('div.heder-action-nav a.btn-cart span.counter').invoke('text').then(text => {
         expect(parseFloat(text)).to.be.eq(0);
-      })
+      });
+      cy.get('a.btn-cart').click();
+      cy.get('div.header-mini-cart div.mini-cart-body').find('div.cart-item').should('not.exist');
+      cy.get('div.header-mini-cart a.cart-close').click();
+      cy.get('div.header-mini-cart').should('not.be.visible');
     })
 
     it('Verify navigate to category page from header nav', () => {
