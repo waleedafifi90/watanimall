@@ -8,18 +8,18 @@ describe('Watanimall add to cart scenario', () => {
   const manufacturerName = 'ASUS';
   const initTotalWithOneProduct = 970;
   const totalAddedCost = 30;
+  const currency = '₪';
 
   before(() => {
     cy.visit('/');
   });
 
   beforeEach(() => {
-    // Preserve cookie in every test
     Cypress.Cookies.defaults({
       preserve: (cookie) => {
         return true;
       }
-    })
+    });
   });
 
   context('Navigate to all category from header nav', () => {
@@ -30,6 +30,7 @@ describe('Watanimall add to cart scenario', () => {
     })
 
     it('Verify navigate to category page from header nav', () => {
+      // cy.afterBeforeSelector(['#header #nav ul li:nth-child(5) a', 'after']);
       cy.get("#header #nav ul li a[href*=all-categories]").click();
       cy.url().should('include', 'all-categories');
       cy.get('#main h1').should('contain', categoryPageTitle);
@@ -68,21 +69,20 @@ describe('Watanimall add to cart scenario', () => {
     it('Verify soritng the result price from low to high', () => {
       cy.get('div.sort-wrapper form span.jcf-select-orderby').should('be.visible');
       cy.get('div.sort-wrapper form span.jcf-select-orderby').click();
+      
+      let url = 'https://watanimall.com/product-category/monitors?orderby=price&_manufacturer=asus';
+      cy.intercept('POST', url).as('asusRequest');
+
       cy.get('div.sort-wrapper form div.jcf-select-drop ul li span[data-index=4]').click();
-      // cy.intercept("POST","https://watanimall.com/product-category/monitors?orderby=price&_manufacturer=asus").as("sort");
-      // cy.wait("@sort");
+
+      cy.wait('@asusRequest');
     });
   
     it('Verify add the product to cart ', () => {
-      cy.wait(2000);
-      cy.get('div.shop-products-holder div.product-col:first-child div.product-item div.product-price bdi').invoke('text').as('productPrice');
+      // cy.wait(2000);
       cy.get('div.shop-products-holder div.product-col:first-child div.product-item').realHover().children('div.btn-cart-wrap').should('be.visible');
       cy.get('div.shop-products-holder div.product-col:nth-child(1) div.product-item div.btn-cart-wrap a.btn-add-cart').click();
-      cy.get('div.header-mini-cart').should('be.visible');
-      cy.get('@productPrice').then(text => {
-        let num = parseFloat(text.substr(1).trim().replace(/,/g, '')) + totalAddedCost;
-        expect(num).to.equal(initTotalWithOneProduct);
-      });
+      cy.totalPrice(currency);
       cy.get('div.header-mini-cart a.cart-close').click();
       cy.get('div.heder-action-nav a.btn-cart span.counter').invoke('text').then(text => {
         expect(parseFloat(text)).to.be.eq(1);
@@ -107,16 +107,9 @@ describe('Watanimall add to cart scenario', () => {
 
     it('Verify add the product to the cart', () => {
       cy.get('button[name="add-to-cart"]').click();
-      cy.get('div.header-mini-cart').should('be.visible');
-      // cy.get('div.header-mini-cart div.mini-cart-items bdi').then(element => {
-      //   // cy.log(element)
-      //   let total = 0;
-      //   for(let i = 0; i < element.length; i++) {
-      //     total += parseFloat(element[i].innerText.substr(1).trim().replace(/,/g, ''));
-      //   }
-
-      //   expect(total).to.equal(3310);
-      // })
+      
+      cy.totalPrice(currency);
+      
       cy.get('div.heder-action-nav a.btn-cart span.counter').invoke('text').then(text => {
         expect(parseFloat(text)).to.be.eq(3);
       });
@@ -124,9 +117,13 @@ describe('Watanimall add to cart scenario', () => {
     });
 
     it('Verify delete a product from the cart', () => {
+      // cy.get('div.mini-cart-body div.cart-item').first().children('a.cart-remove').realHover();
+      // cy.get('div.mini-cart-body div.cart-item').first().children('a.cart-remove').should('have.css', 'color', 'rgb(245, 140, 13)');
       cy.get('div.mini-cart-body div.cart-item').first().children('a.cart-remove').click();
+      cy.totalPrice(currency);
+      cy.get('div.loader-wrap').should('have.css', 'visibility', 'visible');
     });
-  })
+  });
 
   after(() => {
     cy.clearCookies();
