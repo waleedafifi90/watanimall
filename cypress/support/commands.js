@@ -55,6 +55,24 @@ Cypress.Commands.add('totalPrice', (currency) => {
   })
 })
 
+Cypress.Commands.add('getCartCount', () => {
+  cy.get('div.heder-action-nav a.btn-cart span.counter').invoke('text').as('cartCount');
+  cy.get('div.header-mini-cart div.mini-cart-body').then(item => {
+    let cartItem = item.find('div.cart-item').length;
+    let counter = 0;
+    if(cartItem) {
+      cy.get('div.header-mini-cart div.cart-item').then(item => {      
+        for(let i = 0; i < item.length; i++) {
+          counter += parseInt(item.find('input.cart_qty')[i].value);
+        }
+      })
+    }
+    cy.get('@cartCount').then(text => {
+      expect(parseInt(text)).to.equal(counter);
+    });
+  });
+})
+
 Cypress.Commands.overwrite("clearCookies", () => {
   cy.getCookies().then(cookies => {
       for (const cookie of cookies) {

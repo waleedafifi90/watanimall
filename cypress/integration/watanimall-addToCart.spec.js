@@ -27,11 +27,8 @@ describe('Watanimall add to cart scenario', () => {
       cy.get('.btn-cart > .counter')
         .should('have.css', 'background-color', 'rgb(245, 140, 13)')
         .and('have.css', 'color', 'rgb(255, 255, 255)');
-      cy.get('div.heder-action-nav a.btn-cart span.counter').invoke('text').then(text => {
-        expect(parseFloat(text)).to.be.eq(0);
-      });
       cy.get('a.btn-cart').click();
-      cy.get('div.header-mini-cart div.mini-cart-body').find('div.cart-item').should('not.exist');
+      cy.getCartCount();
       cy.get('div.header-mini-cart a.cart-close').click();
       cy.get('div.header-mini-cart').should('not.be.visible');
     })
@@ -112,10 +109,8 @@ describe('Watanimall add to cart scenario', () => {
 
       cy.get('div.shop-products-holder div.product-col:nth-child(1) div.product-item div.btn-cart-wrap a.btn-add-cart').click();
       cy.totalPrice(currency);
+      cy.getCartCount();
       cy.get('div.header-mini-cart a.cart-close').click();
-      cy.get('div.heder-action-nav a.btn-cart span.counter').invoke('text').then(text => {
-        expect(parseFloat(text)).to.be.eq(1);
-      })
     });
 
     it('Verify navigating to the second product', function() {
@@ -138,10 +133,7 @@ describe('Watanimall add to cart scenario', () => {
       cy.get('button[name="add-to-cart"]').click();
       
       cy.totalPrice(currency);
-      
-      cy.get('div.heder-action-nav a.btn-cart span.counter').invoke('text').then(text => {
-        expect(parseFloat(text)).to.be.eq(3);
-      });
+      cy.getCartCount();
       cy.get('span.backdrop-overlay').should('have.css', 'visibility', 'visible');
     });
 
