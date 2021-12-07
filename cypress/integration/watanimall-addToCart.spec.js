@@ -30,7 +30,7 @@ describe('Watanimall add to cart scenario', () => {
     })
 
     it('Verify navigate to category page from header nav', () => {
-      // cy.afterBeforeSelector(['#header #nav ul li:nth-child(5) a', 'after']);
+      // cy.afterBeforeSelector('#header #nav ul li:nth-child(5) a', 'after');
       cy.get("#header #nav ul li a[href*=all-categories]").click();
       cy.url().should('include', 'all-categories');
       cy.get('#main h1').should('contain', categoryPageTitle);
@@ -58,8 +58,13 @@ describe('Watanimall add to cart scenario', () => {
 
     it('Verify filtring the list based on ASUS category', () => {
       cy.get('div[data-name="manufacturer"] div[data-value="asus"]').should('contain', manufacturerName);
-      cy.get('div[data-name="manufacturer"] div[data-value="asus"] span').should('contain', 13);
+      cy.get('div[data-name="manufacturer"] div[data-value="asus"] span').invoke('text').as('categoryCount');
       cy.get('div[data-name="manufacturer"] div[data-value="asus"]').click();
+      
+      cy.get('@categoryCount').then(ele => {
+        cy.get('div.products-row div.product-col').should('have.length', parseFloat(ele.replace(/[()]/g, "").trim()))
+      })
+      
       cy.get('div[data-name="manufacturer"] div[data-value="asus"]').should('have.class', 'checked');
       cy.get('div.shop-products-holder div.loader').should('have.class', 'hidden');
       cy.get('div.shop-products-holder div.product-col').should('contain', manufacturerName);
@@ -79,7 +84,13 @@ describe('Watanimall add to cart scenario', () => {
     });
   
     it('Verify add the product to cart ', () => {
-      // cy.wait(2000);
+      
+      cy.get('div.products-row div.product-col bdi').then(ele => {
+        const unsortedItems = ele.map((index, el) =>  Cypress.$(el).text().substr(1).trim().replace(/,/g, '')).get();
+        const sortedItems = unsortedItems.slice().sort((a, b) => parseFloat(a) - parseFloat(b));
+        expect(sortedItems, 'Items are sorted').to.deep.equal(unsortedItems);
+      });
+
       cy.get('div.shop-products-holder div.product-col:first-child div.product-item').realHover().children('div.btn-cart-wrap').should('be.visible');
       cy.get('div.shop-products-holder div.product-col:nth-child(1) div.product-item div.btn-cart-wrap a.btn-add-cart').click();
       cy.totalPrice(currency);

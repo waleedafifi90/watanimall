@@ -63,14 +63,12 @@ Cypress.Commands.overwrite("clearCookies", () => {
   })
 })
 
-Cypress.Commands.add('afterBeforeSelector', (sel) => {
-  let querySelector = document.querySelector(sel[0]);
-  cy.log(querySelector);
-  // let backColor = window.getComputedStyle(
-  //   document.querySelector(`${sel[0]}`), `:${sel[1]}`
-  // ).getPropertyValue('background-color');
+Cypress.Commands.add('afterBeforeSelector', (sel, pseudo) => {
+  let backColor = window.getComputedStyle(
+    document.querySelector(`${sel}`), `:${pseudo}`
+  ).getPropertyValue('background-color');
 
-  // cy.get(sel[0]).then(el => {
-  //   expect(document.querySelector(el), `:${sel[1]}`).to.have.css('background-color', backColor);
-  // })
+  cy.get(sel).then(el => {
+    expect(document.querySelector(el), `:${sel}`).to.have.css('background-color', backColor);
+  })
 })
