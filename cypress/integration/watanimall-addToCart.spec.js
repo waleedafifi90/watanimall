@@ -34,7 +34,6 @@ describe('Watanimall add to cart scenario', () => {
     })
 
     it('Verify navigate to category page from header nav', () => {
-      // cy.afterBeforeSelector('#header #nav ul li:nth-child(5) a', 'after');
       cy.get("#header #nav ul li a[href*=all-categories]").click();
       cy.url().should('include', 'all-categories');
       cy.get('#main h1').should('contain', categoryPageTitle);
@@ -49,7 +48,7 @@ describe('Watanimall add to cart scenario', () => {
     });
   });
 
-  context('Monitor category test suite', () => {
+  context('Navigate to Monitor category and add product from on hover add to cart button', () => {
     it('Verify navigating to monitor category from the list', () => {
       cy.get('#main div.category-row div a[href*=monitors]').should('contain', categoryName);
       cy.get('#main div.category-row div a[href*=monitors]').realHover();
@@ -112,6 +111,9 @@ describe('Watanimall add to cart scenario', () => {
       cy.getCartCount();
       cy.get('div.header-mini-cart a.cart-close').click();
     });
+  });
+
+  context('Navigate to product details page', () => {
 
     it('Verify navigating to the second product', function() {
       cy.get('div.shop-products-holder div.product-col:nth-child(2) .product-item > .product-name a').invoke('text').as('productName');
@@ -144,7 +146,7 @@ describe('Watanimall add to cart scenario', () => {
       cy.totalPrice(currency);
       cy.get('div.loader-wrap').should('have.css', 'visibility', 'visible');
     });
-  });
+  })
 
   after(() => {
     cy.clearCookies();
