@@ -1,6 +1,9 @@
 ![Cypress.io](https://miro.medium.com/max/7200/1*Jkb_tsMBOvL6wQ8bzldu8Q.png)
 # watanimall
 
+[![waleedafifi90 - watanimall](https://img.shields.io/static/v1?label=waleedafifi90&message=watanimall&color=blue&logo=github)](https://github.com/waleedafifi90/watanimall "Go to GitHub repo") [![stars - watanimall](https://img.shields.io/github/stars/waleedafifi90/watanimall?style=social)](https://github.com/waleedafifi90/watanimall) [![forks - watanimall](https://img.shields.io/github/forks/waleedafifi90/watanimall?style=social)](https://github.com/waleedafifi90/watanimall) [![License](https://img.shields.io/badge/License-MIT-blue)](#license) ![Coverage](https://img.shields.io/badge/Coverage-90%-brightgreen.svg?style=flat)  ![Test Cases](https://img.shields.io/badge/Test-15-blue.svg?style=flat)
+
+
 This repo will allow you to check if the functionallity of the Watanimall working without problems.
 
 Also there some of the assertion to check the style like the hover
