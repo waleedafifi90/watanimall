@@ -93,7 +93,7 @@ describe('Watanimall add to cart scenario', () => {
       cy.wait('@asusRequest');
     });
   
-    it('Verify add the product to cart ', () => {
+    it('Verify add the product to cart ', function() {
       
       cy.get('div.products-row div.product-col div.product-price').children().not('del').find('bdi').then(ele => {
         const unsortedItems = ele.map((index, el) =>  Cypress.$(el).text().substr(1).trim().replace(/,/g, '')).get();
@@ -103,27 +103,39 @@ describe('Watanimall add to cart scenario', () => {
 
       cy.get('a[data-id="107188"]').parents('div.product-item').realHover().children('div.btn-cart-wrap').should('be.visible');
       // cy.get('div.shop-products-holder div.product-col:first-child div.product-item div.btn-cart-wrap a.btn-add-cart').as('addToCart');
-      // cy.get('@addToCart').realHover();
-      // cy.get('@addToCart').should('have.css', 'background', 'rgb(245, 140, 13) none repeat scroll 0% 0% / auto padding-box border-box')
+      // cy.get('a[data-id="107188"]').realHover().should('have.css', 'background', 'rgb(245, 140, 13) none repeat scroll 0% 0% / auto padding-box border-box')
       
       cy.get('a[data-id="107188"]').click();
-      cy.totalPrice(currency);
+      cy.totalPrice(this.data.currency);
       cy.getCartCount();
       cy.get('div.header-mini-cart a.cart-close').click();
+
     });
   });
 
   context('Navigate to product details page', () => {
-
+    it('Verify add the product details for 107055 to fixture', () => {
+      cy.get('a[data-id="107055"]').parents('div.product-item').then(ele => {
+        cy.writeFile('cypress/fixtures/product.json', {
+          'href': `${ele.find('h3.product-name a').attr('href')}`,
+          'productName': `${ele.find('h3.product-name a').text()}`,
+          'productPrice': `${ele.find('div.product-price bdi').text()}`,
+          'dataID': `${ele.find('a.btn-add-cart').attr('data-id')}`
+        })
+      })
+    })
     it('Verify navigating to the second product', function() {
-      cy.get('div.shop-products-holder div.product-col:nth-child(2) .product-item > .product-name a').invoke('text').as('productName');
-      cy.get('div.shop-products-holder div.product-col:nth-child(2) .product-item > .product-name a').click();
-      cy.get('@productName').then( text => {
-        cy.get('.product_title').should('contain', text.split(' ')[4]);
+      cy.get('a[data-id="107055"]').parents('div.product-item').click();
+      cy.fixture('product').then( text => {
+        cy.url().should('equal', text.href);
+        cy.get('div.single-product-detail .product_title').should('contain', text.productName.slice(1, 20));
+        cy.get(`div[id=product-${text.dataID}]`).should('exist');
+        cy.get('div.single-product-detail div.product-price bdi').should('have.text', text.productPrice);
       })
     });
 
-    it('Verify increas product quantity from the buttons', () => {
+    it('Verify increas product quantity from the buttons', function() {
+      cy.log(this.data)
       cy.get('form.cart div.quantity span.jcf-btn-dec').should('have.class', 'jcf-disabled');
       cy.get('input[id*=quantity]').should('have.value', 1);
       cy.get('form.cart div.quantity span.jcf-btn-inc').click();
