@@ -49,3 +49,4 @@ cypress/integration/watanimall-addToCart.spec.js
 - Check the changes on monitor size once Asus selected
 - Check for the changes on the product list once the sort type changed
 - Check home screen (page title, active style for current nav item)
+- Change category row assertion to check for empty insted of length

@@ -53,7 +53,7 @@ describe('Watanimall add to cart scenario', () => {
     });
 
     it('Verify all category listed in the page', () => {
-      cy.get('#main .category-page-container .category-row').should('have.length.at.least', 1);
+      cy.get('#main .category-page-container .category-row').should('not.be.empty');
     });
   });
 
