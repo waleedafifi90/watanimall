@@ -9,6 +9,7 @@ describe('Watanimall add to cart scenario', () => {
   const initTotalWithOneProduct = 970;
   const totalAddedCost = 30;
   const currency = '₪';
+  const homeTitle = 'الرئيسية';
 
   before(() => {
     cy.visit('/');
@@ -23,6 +24,14 @@ describe('Watanimall add to cart scenario', () => {
   });
 
   context('Navigate to all category from header nav', () => {
+    it('Verify home screen after visit the website', () => {
+      cy.title().should('contain', homeTitle);
+      cy.get('a[aria-current="page"]')
+        .parent()
+        .should('have.class', 'current-menu-item')
+        .and('contain', homeTitle);
+    });
+
     it('Verify the cart is empty', () => {
       cy.get('.btn-cart > .counter')
         .should('have.css', 'background-color', 'rgb(245, 140, 13)')

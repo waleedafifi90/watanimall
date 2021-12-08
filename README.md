@@ -47,4 +47,5 @@ cypress/integration/watanimall-addToCart.spec.js
 - Dynamic assertion for the cart Quantity and the cart item as custom Command
 - Get the first element by `data-id` insted of `nth-child` selector
 - Check the changes on monitor size once Asus selected
-- Check for the changes on the product list once the sort type changed 
+- Check for the changes on the product list once the sort type changed
+- Check home screen (page title, active style for current nav item)
