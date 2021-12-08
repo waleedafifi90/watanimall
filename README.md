@@ -33,8 +33,12 @@ cypress/integration/watanimall-addToCart.spec.js
 
 
 
-https://user-images.githubusercontent.com/57403758/145202435-a1018d86-5d83-4e98-b6b2-99786393cef9.mp4
 
+https://user-images.githubusercontent.com/57403758/145275285-325103c4-d0a5-4d9d-a690-d217475e1f57.mp4
+
+
+### Cypress run test
+<img width="584" alt="Screen Shot 2021-12-08 at 9 54 30 PM" src="https://user-images.githubusercontent.com/57403758/145275233-fa9286b9-c33e-4bfb-bec0-d9353011afe5.png">
 
 
 
