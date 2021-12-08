@@ -58,3 +58,4 @@ https://user-images.githubusercontent.com/57403758/145202435-a1018d86-5d83-4e98-
 - Go back to home page after removing an item from teh cart and check for the url and the active style
 - Change the constant variable to fixture
 - Get the product 107055 and store it into fixture then check it in the details page
+- Check the pagination if it's exists or not when the product count more or less than 45 

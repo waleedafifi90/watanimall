@@ -7,5 +7,6 @@
   "initTotalWithOneProduct": 970,
   "totalAddedCost": 30,
   "currency": "₪",
-  "homeTitle": "الرئيسية"
+  "homeTitle": "الرئيسية",
+  "itemPerPage": 45
 }

@@ -57,6 +57,14 @@ describe('Watanimall add to cart scenario', () => {
       cy.get('#main div.category-row div a[href*=monitors]').click();
       cy.url().should('include', 'product-category/monitors');
       cy.get('#main div.shop-header h1').should('contain', this.data.categoryName)
+
+      cy.get('div.products-row div.product-col').then(items => {
+        if(items.length == this.data.itemPerPage) {
+          if(items.last().next('nav.woocommerce-pagination')) {
+            cy.get('nav.woocommerce-pagination').should('exist');
+          }
+        }
+      })
     });
 
     it('Verify filtring the list based on ASUS category', function() {
@@ -68,13 +76,18 @@ describe('Watanimall add to cart scenario', () => {
       cy.get('div[data-name="manufacturer"] div[data-value="asus"]').click();
       
       cy.get('@categoryCount').then(ele => {
-        cy.get('div.products-row div.product-col').should('have.length', parseFloat(ele.replace(/[()]/g, "").trim()))
+        cy.get('div.products-row div.product-col').should('have.length', parseFloat(ele.replace(/[()]/g, "").trim()));
       })
       
       cy.get('@monitorSize').then(size => {
         cy.get('div[data-name="monitor_size_in_inches"] span').invoke('text').should('not.equal', size);
       })
 
+      cy.get('div.products-row div.product-col').then(items => {
+        if(items.length < this.data.itemPerPage) {
+          cy.get('nav.woocommerce-pagination').should('not.exist');
+        }
+      })
       cy.get('div[data-name="manufacturer"] div[data-value="asus"]').should('have.class', 'checked');
       cy.get('div.shop-products-holder div.loader').should('have.class', 'hidden');
       cy.get('div.shop-products-holder div.product-col').should('contain', this.data.manufacturerName);
@@ -165,9 +178,9 @@ describe('Watanimall add to cart scenario', () => {
       cy.get(`header #nav .nav-wrap ul li a[href="${Cypress.config().baseUrl}/"]`).click();
       cy.url().should('equal', Cypress.config().baseUrl+'/');
       cy.get('a[aria-current="page"]')
-      .parent()
-      .should('have.class', 'current-menu-item')
-      .and('contain', this.data.homeTitle);
+        .parent()
+        .should('have.class', 'current-menu-item')
+        .and('contain', this.data.homeTitle);
     })
   })
 
