@@ -28,7 +28,9 @@ to do update on the test file follow the path to find all of the test cases
 cypress/integration/watanimall-addToCart.spec.js
 ```
 
-![tests](./assets/tests-video.gif)
+https://user-images.githubusercontent.com/57403758/145180892-74a648ec-c918-4156-83af-5c393bafe0a2.mp4
+
+
 
 ### Test cases covered by this app
 - Navigate to Category page from the navigation bar
