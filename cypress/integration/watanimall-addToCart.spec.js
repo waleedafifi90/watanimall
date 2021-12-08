@@ -1,16 +1,6 @@
 /// <reference types="cypress" />
 
 describe('Watanimall add to cart scenario', () => {
-  const categoryPageTitle = 'جميع الفئات';
-  const categoryName = 'MONITORS';
-  let firstProductPrice = 0;
-  let productName = '';
-  const manufacturerName = 'ASUS';
-  const initTotalWithOneProduct = 970;
-  const totalAddedCost = 30;
-  const currency = '₪';
-  const homeTitle = 'الرئيسية';
-
   before(() => {
     cy.visit('/');
   });
@@ -21,15 +11,16 @@ describe('Watanimall add to cart scenario', () => {
         return true;
       }
     });
+    cy.fixture('example').as('data')
   });
 
   context('Navigate to all category from header nav', () => {
-    it('Verify home screen after visit the website', () => {
-      cy.title().should('contain', homeTitle);
+    it('Verify home screen after visit the website', function() {
+      cy.title().should('contain', this.data.homeTitle);
       cy.get('a[aria-current="page"]')
         .parent()
         .should('have.class', 'current-menu-item')
-        .and('contain', homeTitle);
+        .and('contain', this.data.homeTitle);
     });
 
     it('Verify the cart is empty', () => {
@@ -42,10 +33,10 @@ describe('Watanimall add to cart scenario', () => {
       cy.get('div.header-mini-cart').should('not.be.visible');
     })
 
-    it('Verify navigate to category page from header nav', () => {
+    it('Verify navigate to category page from header nav', function() {
       cy.get("#header #nav ul li a[href*=all-categories]").click();
       cy.url().should('include', 'all-categories');
-      cy.get('#main h1').should('contain', categoryPageTitle);
+      cy.get('#main h1').should('contain', this.data.categoryPageTitle);
     });
 
     it('Verify category nav item have the active class', () => {
@@ -58,18 +49,18 @@ describe('Watanimall add to cart scenario', () => {
   });
 
   context('Navigate to Monitor category and add product from on hover add to cart button', () => {
-    it('Verify navigating to monitor category from the list', () => {
-      cy.get('#main div.category-row div a[href*=monitors]').should('contain', categoryName);
+    it('Verify navigating to monitor category from the list', function() {
+      cy.get('#main div.category-row div a[href*=monitors]').should('contain', this.data.categoryName);
       cy.get('#main div.category-row div a[href*=monitors]').realHover();
       cy.get('a.category-item[href*=monitors]').should('have.css', 'box-shadow', 'rgb(230, 231, 237) 0px 18px 50px 0px');
       cy.get('a.category-item[href*=monitors] span.category-name').should('have.css', 'color', 'rgb(245, 140, 13)')
       cy.get('#main div.category-row div a[href*=monitors]').click();
       cy.url().should('include', 'product-category/monitors');
-      cy.get('#main div.shop-header h1').should('contain', categoryName)
+      cy.get('#main div.shop-header h1').should('contain', this.data.categoryName)
     });
 
-    it('Verify filtring the list based on ASUS category', () => {
-      cy.get('div[data-name="manufacturer"] div[data-value="asus"]').should('contain', manufacturerName);
+    it('Verify filtring the list based on ASUS category', function() {
+      cy.get('div[data-name="manufacturer"] div[data-value="asus"]').should('contain', this.data.manufacturerName);
       cy.get('div[data-name="manufacturer"] div[data-value="asus"] span').invoke('text').as('categoryCount');
 
       cy.get('div[data-name="monitor_size_in_inches"] span').invoke('text').as('monitorSize');
@@ -86,7 +77,7 @@ describe('Watanimall add to cart scenario', () => {
 
       cy.get('div[data-name="manufacturer"] div[data-value="asus"]').should('have.class', 'checked');
       cy.get('div.shop-products-holder div.loader').should('have.class', 'hidden');
-      cy.get('div.shop-products-holder div.product-col').should('contain', manufacturerName);
+      cy.get('div.shop-products-holder div.product-col').should('contain', this.data.manufacturerName);
     });
 
 
@@ -140,31 +131,31 @@ describe('Watanimall add to cart scenario', () => {
       cy.get('form.cart div.quantity span.jcf-btn-dec').should('not.have.class', 'jcf-disabled');
     });
 
-    it('Verify add the product to the cart', () => {
+    it('Verify add the product to the cart', function() {
       cy.get('button[name="add-to-cart"]').click();
       
-      cy.totalPrice(currency);
+      cy.totalPrice(this.data.currency);
       cy.getCartCount();
       cy.get('span.backdrop-overlay').should('have.css', 'visibility', 'visible');
     });
 
-    it('Verify delete a product from the cart', () => {
+    it('Verify delete a product from the cart', function() {
       // cy.get('div.mini-cart-body div.cart-item').first().children('a.cart-remove').realHover();
       // cy.get('div.mini-cart-body div.cart-item').first().children('a.cart-remove').should('have.css', 'color', 'rgb(245, 140, 13)');
       cy.get('div.mini-cart-body div.cart-item').first().children('a.cart-remove').click();
-      cy.totalPrice(currency);
+      cy.totalPrice(this.data.currency);
       cy.get('div.loader-wrap').should('have.css', 'visibility', 'visible');
       cy.get('div.header-mini-cart a.cart-close').click();
       cy.get('div.header-mini-cart').should('not.be.visible');
     });
 
-    it('Verify navigating to home screen', () => {
+    it('Verify navigating to home screen', function() {
       cy.get(`header #nav .nav-wrap ul li a[href="${Cypress.config().baseUrl}/"]`).click();
       cy.url().should('equal', Cypress.config().baseUrl+'/');
       cy.get('a[aria-current="page"]')
       .parent()
       .should('have.class', 'current-menu-item')
-      .and('contain', homeTitle);
+      .and('contain', this.data.homeTitle);
     })
   })
 

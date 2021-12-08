@@ -1,5 +1,11 @@
 {
-  "name": "Using fixtures to represent data",
-  "email": "hello@cypress.io",
-  "body": "Fixtures are a great way to mock data for responses to routes"
+  "categoryPageTitle": "جميع الفئات",
+  "categoryName": "MONITORS",
+  "firstProductPrice": 0,
+  "productName": "",
+  "manufacturerName": "ASUS",
+  "initTotalWithOneProduct": 970,
+  "totalAddedCost": 30,
+  "currency": "₪",
+  "homeTitle": "الرئيسية"
 }
