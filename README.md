@@ -28,7 +28,10 @@ to do update on the test file follow the path to find all of the test cases
 cypress/integration/watanimall-addToCart.spec.js
 ```
 
-https://user-images.githubusercontent.com/57403758/145180892-74a648ec-c918-4156-83af-5c393bafe0a2.mp4
+
+
+https://user-images.githubusercontent.com/57403758/145202435-a1018d86-5d83-4e98-b6b2-99786393cef9.mp4
+
 
 
 
@@ -53,3 +56,5 @@ https://user-images.githubusercontent.com/57403758/145180892-74a648ec-c918-4156-
 - Check home screen (page title, active style for current nav item)
 - Change category row assertion to check for empty insted of length
 - Go back to home page after removing an item from teh cart and check for the url and the active style
+- Change the constant variable to fixture
+- Get the product 107055 and store it into fixture then check it in the details page
