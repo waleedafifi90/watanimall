@@ -154,7 +154,18 @@ describe('Watanimall add to cart scenario', () => {
       cy.get('div.mini-cart-body div.cart-item').first().children('a.cart-remove').click();
       cy.totalPrice(currency);
       cy.get('div.loader-wrap').should('have.css', 'visibility', 'visible');
+      cy.get('div.header-mini-cart a.cart-close').click();
+      cy.get('div.header-mini-cart').should('not.be.visible');
     });
+
+    it('Verify navigating to home screen', () => {
+      cy.get(`header #nav .nav-wrap ul li a[href="${Cypress.config().baseUrl}/"]`).click();
+      cy.url().should('equal', Cypress.config().baseUrl+'/');
+      cy.get('a[aria-current="page"]')
+      .parent()
+      .should('have.class', 'current-menu-item')
+      .and('contain', homeTitle);
+    })
   })
 
   after(() => {
