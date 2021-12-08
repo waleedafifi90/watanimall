@@ -1,3 +1,4 @@
+![Cypress.io](https://miro.medium.com/max/7200/1*Jkb_tsMBOvL6wQ8bzldu8Q.png)
 # watanimall
 
 This repo will allow you to check if the functionallity of the Watanimall working without problems.
@@ -27,6 +28,8 @@ to do update on the test file follow the path to find all of the test cases
 cypress/integration/watanimall-addToCart.spec.js
 ```
 
+![tests](https://im7.ezgif.com/tmp/ezgif-7-b720a3317c7c.gif)
+
 ### Test cases covered by this app
 - Navigate to Category page from the navigation bar
 - Check the hover style on the Monitor card
@@ -39,3 +42,9 @@ cypress/integration/watanimall-addToCart.spec.js
 - Ckech the name of the product in the details page
 - Increase the quantity using the buttons and add the product to cart
 - check the cart in the header if had 3 items and then delete one item from the cart
+
+### Updates
+- Dynamic assertion for the cart Quantity and the cart item as custom Command
+- Get the first element by `data-id` insted of `nth-child` selector
+- Check the changes on monitor size once Asus selected
+- Check for the changes on the product list once the sort type changed 
