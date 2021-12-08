@@ -115,9 +115,7 @@ describe('Watanimall add to cart scenario', () => {
       });
 
       cy.get('a[data-id="107188"]').parents('div.product-item').realHover().children('div.btn-cart-wrap').should('be.visible');
-      // cy.get('div.shop-products-holder div.product-col:first-child div.product-item div.btn-cart-wrap a.btn-add-cart').as('addToCart');
-      // cy.get('a[data-id="107188"]').realHover().should('have.css', 'background', 'rgb(245, 140, 13) none repeat scroll 0% 0% / auto padding-box border-box')
-      
+      cy.get('a[data-id="107188"]').realHover().wait(1000).should('have.css', 'background-color', 'rgb(245, 140, 13)');
       cy.get('a[data-id="107188"]').click();
       cy.totalPrice(this.data.currency);
       cy.getCartCount();
