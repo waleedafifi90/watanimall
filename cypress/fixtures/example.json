@@ -8,5 +8,6 @@
   "totalAddedCost": 30,
   "currency": "₪",
   "homeTitle": "الرئيسية",
-  "itemPerPage": 45
+  "itemPerPage": 45,
+  "removeDataKey": "a6c6671bb25e51d6d95712fe85e138b3"
 }

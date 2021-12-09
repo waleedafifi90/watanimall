@@ -67,3 +67,8 @@ https://user-images.githubusercontent.com/57403758/145275285-325103c4-d0a5-4d9d-
 - Get the product 107055 and store it into fixture then check it in the details page
 - Check the pagination if it's exists or not when the product count more or less than 45 
 - Check add to cart button hover effect
+- Remove the item from the cart based on the ket id
+
+
+### Bugs
+- Price format in the cart changed once the user remove an item

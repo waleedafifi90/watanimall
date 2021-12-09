@@ -163,9 +163,10 @@ describe('Watanimall add to cart scenario', () => {
     });
 
     it('Verify delete a product from the cart', function() {
-      // cy.get('div.mini-cart-body div.cart-item').first().children('a.cart-remove').realHover();
-      // cy.get('div.mini-cart-body div.cart-item').first().children('a.cart-remove').should('have.css', 'color', 'rgb(245, 140, 13)');
-      cy.get('div.mini-cart-body div.cart-item').first().children('a.cart-remove').click();
+      cy.get(`div.cart-item a[data-key="${this.data.removeDataKey}"]`).click();
+        // .realHover()
+        // .wait(1000)
+        // .should('have.css', 'color', 'rgb(245, 140, 13)');
       cy.totalPrice(this.data.currency);
       cy.get('div.loader-wrap').should('have.css', 'visibility', 'visible');
       cy.get('div.header-mini-cart a.cart-close').click();
