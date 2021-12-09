@@ -131,6 +131,7 @@ describe('Watanimall add to cart scenario', () => {
       cy.totalPrice(this.data.currency);
       cy.getCartCount();
       cy.get('div.header-mini-cart a.cart-close').click();
+      cy.get('div.header-mini-cart').should('not.be.visible');
     });
 
     it('Verify product count on change monitor size with asus brand', () => {
@@ -178,14 +179,15 @@ describe('Watanimall add to cart scenario', () => {
     });
   });
 
-  context('Navigate to product details page', () => {
+  context('Navigate to product details page', function() {
     it('Verify add the product details for product id: 106816 to fixture', function() {
       cy.get(`a[data-id="${this.data.productID}"]`).parents('div.product-item').then(ele => {
         cy.writeFile('cypress/fixtures/product.json', {
           'href': `${ele.find('h3.product-name a').attr('href')}`,
           'productName': `${ele.find('h3.product-name a').text()}`,
           'productPrice': `${ele.find('div.product-price bdi').text()}`,
-          'dataID': `${ele.find('a.btn-add-cart').attr('data-id')}`
+          'dataID': `${ele.find('a.btn-add-cart').attr('data-id')}`,
+          'manufacture': `${this.data.manufacturerName}`
         })
       })
     })
@@ -197,6 +199,8 @@ describe('Watanimall add to cart scenario', () => {
         cy.get('div.single-product-detail .product_title').should('contain', text.productName.slice(1, 20));
         cy.get(`div[id=product-${text.dataID}]`).should('exist');
         cy.get('div.single-product-detail div.product-price bdi').should('have.text', text.productPrice);
+        cy.get('div.single-product-summary table').should('contain', text.manufacture);
+        cy.get('div.single-product-container nav.woocommerce-breadcrumb').should('contain', text.productName);
       })
     });
 
