@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
 
 describe('Watanimall add to cart scenario', () => {
+  let url = 'https://watanimall.com/product-category/monitors?orderby=price&_manufacturer=asus';
+
   before(() => {
     cy.visit('/');
   });
@@ -98,40 +100,81 @@ describe('Watanimall add to cart scenario', () => {
       cy.get('div.shop-products-holder div.product-col').should('contain', this.data.manufacturerName);
     });
 
-    it('Verify product count on change monitor size with asus brand', () => {
-      cy.get('div[data-value=27]').click();
-      cy.get('div[data-value=27]').should('have.class', 'checked').children('span').invoke('text').then(text => {
-        cy.get('div.products-row div.product-col').should('have.length', parseFloat(text.replace(/[()]/g, "").trim()))
-      })
-    })
+    it('Verify soritng the result price from low to high', function() {
+      cy.intercept('POST', url).as('asusRequest');
 
-    it('Verify soritng the result price from low to high', () => {
       cy.get('div.sort-wrapper form span.jcf-select-orderby').should('be.visible');
       cy.get('div.sort-wrapper form span.jcf-select-orderby').click();
       
-      let url = 'https://watanimall.com/product-category/monitors?orderby=price&_manufacturer=asus&_monitor_size_in_inches=27';
-      cy.intercept('POST', url).as('asusRequest');
-
       cy.get('div.sort-wrapper form div.jcf-select-drop ul li span[data-index=4]').click();
-
+      cy.get('div.sort-wrapper form.woocommerce-ordering span.jcf-select-text').should('have.text', this.data.order);
+      cy.url().should('include', 'orderby=price');
       cy.wait('@asusRequest');
     });
   
     it('Verify add the product to cart ', function() {
-      
       cy.get('div.products-row div.product-col div.product-price').children().not('del').find('bdi').then(ele => {
         const unsortedItems = ele.map((index, el) =>  Cypress.$(el).text().substring(1).trim().replace(/,/g, '')).get();
         const sortedItems = unsortedItems.slice().sort((a, b) => parseFloat(a) - parseFloat(b));
         expect(sortedItems, 'Items are sorted').to.deep.equal(unsortedItems);
       });
 
+      cy.get('a[data-id="107056"]').parents('div.product-item').find('h3').invoke('text').as('firstProductName');
       cy.get('a[data-id="107056"]').parents('div.product-item').realHover().children('div.btn-cart-wrap').should('be.visible');
       cy.get('a[data-id="107056"]').realHover().wait(1000).should('have.css', 'background-color', 'rgb(245, 140, 13)');
       cy.get('a[data-id="107056"]').click();
+
+      cy.get('@firstProductName').then(text => {
+        cy.get('div.header-mini-cart strong.product-name').should('contain', text);
+      });
+
       cy.totalPrice(this.data.currency);
       cy.getCartCount();
       cy.get('div.header-mini-cart a.cart-close').click();
+    });
 
+    it('Verify product count on change monitor size with asus brand', () => {
+      cy.get('div[data-value=27]').click();
+      cy.get('div[data-value=27]').should('have.class', 'checked').children('span').invoke('text').then(text => {
+        cy.get('div.products-row div.product-col').should('have.length', parseFloat(text.replace(/[()]/g, "").trim()))
+      })
+      cy.url().should('contain', `_monitor_size_in_inches`);
+    })
+
+    it('Verify product count on change Resolution with asus brand and monitor size', () => {
+      cy.get('div[data-value=2560x1440]').click();
+      cy.get('div[data-value=2560x1440]').should('have.class', 'checked').children('span').invoke('text').then(text => {
+        cy.get('div.products-row div.product-col').should('have.length', parseFloat(text.replace(/[()]/g, "").trim()))
+      })
+      cy.url().should('contain', `_resolution`);
+    });
+
+    it('Verify product count on change Monitor Panel Type with asus brand and monitor size and resolution', () => {
+      cy.get('div[data-value=ips]').click();
+      cy.get('div[data-value=ips]').should('have.class', 'checked').children('span').invoke('text').then(text => {
+        cy.get('div.products-row div.product-col').should('have.length', parseFloat(text.replace(/[()]/g, "").trim()))
+      })
+      cy.url().should('contain', `_panel_type`);
+    });
+
+    it('Verify product count on change Monitor Feature with asus brand and monitor size and resolution and Monitor Panel Type', () => {
+      cy.get('div[data-value=flat]').click();
+      cy.get('div[data-value=flat]').should('have.class', 'checked').children('span').invoke('text').then(text => {
+        cy.get('div.products-row div.product-col').should('have.length', parseFloat(text.replace(/[()]/g, "").trim()))
+      })
+      cy.url().should('contain', `_panel_type`);
+    });
+
+    it('Verify product count on change Monitor Frequency with asus brand and monitor size and resolution and Monitor Panel Type and Monitor Feature', () => {
+      url = 'https://watanimall.com/product-category/monitors?orderby=price&_manufacturer=asus&_monitor_size_in_inches=27&_resolution=2560x1440&_panel_type=ips&_monitor_feature=flat&_monitor_frequ=165';
+      cy.intercept('POST', url).as('asusRequest');
+
+      cy.get('div[data-value=165]').click();
+      cy.get('div[data-value=165]').should('have.class', 'checked').children('span').invoke('text').then(text => {
+        cy.get('div.products-row div.product-col').should('have.length', parseFloat(text.replace(/[()]/g, "").trim()))
+      })
+      cy.url().should('contain', `_panel_type`);
+      cy.wait('@asusRequest');
     });
   });
 
