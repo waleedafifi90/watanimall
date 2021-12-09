@@ -79,7 +79,7 @@ https://user-images.githubusercontent.com/57403758/145349386-7b67f67a-1532-411f-
 ### Custom command explanation
 ```Javascript
 /**
- * @ cypress/support/commands.js
+ * @path cypress/support/commands.js
  */
 
 /** 
