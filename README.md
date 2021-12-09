@@ -74,3 +74,42 @@ https://user-images.githubusercontent.com/57403758/145349386-7b67f67a-1532-411f-
 ### Bugs
 - Price format in the cart changed once the user remove an item
 <img width="383" alt="Screen Shot 2021-12-09 at 8 54 10 AM" src="https://user-images.githubusercontent.com/57403758/145349351-5efdd197-b19a-45f8-b4db-5a37699f7f67.png">
+
+
+### Custom command explanation
+```Javascript
+/**
+ * @ cypress/support/commands.js
+ */
+
+/** 
+ * @function formatMoney 
+ * @var number Should be passed by the user
+ * @var decPlaces by default 2
+ * @var decSep number will has . separator for decimal
+ * @var thouSep to seperate between thousands like 1,000.00
+ * 
+ * @invoke cy.formatMoney(7784334); => 7,784,334.00
+*/
+
+/**
+ * @function totalPrice
+ * @var currency symbol ($)
+ * 
+ * @invoke cy.totalPrice($);
+ * 
+ * This command will loop over the cart and get the quantity value
+ * then multiply it with the price then compare it with total price
+ * 
+*/
+
+/**
+ * @function getCartCount
+ * @invoke cy.getCartCount();
+ * 
+ * This command get the counter from the cart count span in the header
+ * then it's open the mini cart and loop over the cart item once there 
+ * are items it get the values of the item the check the total of the 
+ * values with the number in the cart count span
+*/
+```
