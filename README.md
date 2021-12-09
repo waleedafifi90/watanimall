@@ -1,7 +1,7 @@
 ![Cypress.io](https://miro.medium.com/max/7200/1*Jkb_tsMBOvL6wQ8bzldu8Q.png)
 # watanimall
 
-[![waleedafifi90 - watanimall](https://img.shields.io/static/v1?label=waleedafifi90&message=watanimall&color=blue&logo=github)](https://github.com/waleedafifi90/watanimall "Go to GitHub repo") [![stars - watanimall](https://img.shields.io/github/stars/waleedafifi90/watanimall?style=social)](https://github.com/waleedafifi90/watanimall) [![License](https://img.shields.io/badge/License-MIT-blue)](#license) ![Coverage](https://img.shields.io/static/v1?label=Coverage&message=90%&color=green&logo=github-actions&logoColor=white)  ![Test Cases](https://img.shields.io/badge/Test-15-blue.svg?style=flat)
+[![waleedafifi90 - watanimall](https://img.shields.io/static/v1?label=waleedafifi90&message=watanimall&color=blue&logo=github)](https://github.com/waleedafifi90/watanimall "Go to GitHub repo") [![stars - watanimall](https://img.shields.io/github/stars/waleedafifi90/watanimall?style=social)](https://github.com/waleedafifi90/watanimall) [![License](https://img.shields.io/badge/License-MIT-blue)](#license) ![Coverage](https://img.shields.io/static/v1?label=Coverage&message=91%&color=green&logo=github-actions&logoColor=white)  ![Test Cases](https://img.shields.io/badge/Test-16-blue.svg?style=flat)
 
 
 This repo will allow you to check if the functionallity of the Watanimall working without problems.
@@ -73,6 +73,7 @@ https://user-images.githubusercontent.com/57403758/145349386-7b67f67a-1532-411f-
 - Check add to cart button hover effect
 - Remove the item from the cart based on the ket id
 - Check add to cart button style in product details page
+- Check the slider inside the product page
 
 ### Bugs
 - Price format in the cart changed once the user remove an item

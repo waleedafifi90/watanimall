@@ -125,8 +125,8 @@ describe('Watanimall add to cart scenario', () => {
   });
 
   context('Navigate to product details page', () => {
-    it('Verify add the product details for 107055 to fixture', () => {
-      cy.get('a[data-id="107055"]').parents('div.product-item').then(ele => {
+    it('Verify add the product details for product id: 125434 to fixture', function() {
+      cy.get(`a[data-id="${this.data.productID}"]`).parents('div.product-item').then(ele => {
         cy.writeFile('cypress/fixtures/product.json', {
           'href': `${ele.find('h3.product-name a').attr('href')}`,
           'productName': `${ele.find('h3.product-name a').text()}`,
@@ -137,7 +137,7 @@ describe('Watanimall add to cart scenario', () => {
     })
 
     it('Verify navigating to the second product', function() {
-      cy.get('a[data-id="107055"]').parents('div.product-item').click();
+      cy.get(`a[data-id="${this.data.productID}"]`).parents('div.product-item').click();
       cy.fixture('product').then( text => {
         cy.url().should('equal', text.href);
         cy.get('div.single-product-detail .product_title').should('contain', text.productName.slice(1, 20));
@@ -154,6 +154,16 @@ describe('Watanimall add to cart scenario', () => {
       cy.get('input[id*=quantity]').should('have.value', 2);
       cy.get('form.cart div.quantity span.jcf-btn-dec').should('not.have.class', 'jcf-disabled');
     });
+
+    it('Verify Change the slider image', () => {
+      cy.get('div.single-product-detail div.single-slider-wrapper').then(slider => {
+        if(slider.find('div.pagination-slider-wrapper').length) {
+          cy.get('div.single-product-detail div.single-slider-wrapper div.pagination-slider-wrapper div[data-slick-index="2"]').click();
+          cy.get('div.single-product-detail div.single-slider-wrapper div.pagination-slider-wrapper div[data-slick-index="2"]').should('have.class', 'slick-active');
+          cy.get('div.single-product-detail div.slick-list div[data-slick-index="2"').should('have.class', 'slick-active');
+        } else { cy.log('No Slides found') }
+      })
+    })
 
     it('Verify add the product to the cart', function() {
       cy.get('button[name="add-to-cart"]')
