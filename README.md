@@ -34,16 +34,13 @@ to do update on the test file follow the path to find all of the test cases
 cypress/integration/watanimall-addToCart.spec.js
 ```
 
-
-
-
-https://user-images.githubusercontent.com/57403758/145349386-7b67f67a-1532-411f-ad3e-2e3763862e72.mp4
-
+https://user-images.githubusercontent.com/57403758/145365063-a310f42b-63b2-485e-bd67-0aad75a13b49.mp4
 
 
 ### Cypress run test
-<img width="584" alt="Screen Shot 2021-12-08 at 9 54 30 PM" src="https://user-images.githubusercontent.com/57403758/145275233-fa9286b9-c33e-4bfb-bec0-d9353011afe5.png">
+https://user-images.githubusercontent.com/57403758/145365574-dd021fc7-ed36-4016-b354-90a815aa6a68.mp4
 
+<img width="561" alt="Screen Shot 2021-12-09 at 11 00 10 AM" src="https://user-images.githubusercontent.com/57403758/145365634-9d9d96ce-d7ed-440e-abb0-0ee01939caf5.png">
 
 
 ### Test cases covered by this app
