@@ -204,13 +204,34 @@ describe('Watanimall add to cart scenario', () => {
       })
     });
 
-    it('Verify increas product quantity from the buttons', function() {
-      cy.log(this.data)
+    it('Verify increase product quantity from the buttons', function() {
+      // cy.log(this.data)
       cy.get('form.cart div.quantity span.jcf-btn-dec').should('have.class', 'jcf-disabled');
       cy.get('input[id*=quantity]').should('have.value', 1);
-      cy.get('form.cart div.quantity span.jcf-btn-inc').click();
-      cy.get('input[id*=quantity]').should('have.value', 2);
-      cy.get('form.cart div.quantity span.jcf-btn-dec').should('not.have.class', 'jcf-disabled');
+      cy.get('div.single-product-detail p.stock').invoke('text').as('stockCount');
+      cy.get('@stockCount').then(text => {
+        let stockCount = parseInt(text.replace(/[^0-9]/g, ''));
+        cy.log(stockCount);
+        cy.get('form.cart div.quantity span.jcf-btn-inc').realHover().wait(1000).should('have.css', 'background-color', 'rgb(245, 140, 13)')
+        cy.get('form.cart div.quantity span.jcf-btn-inc').click();
+        cy.get('input[id*=quantity]').should('have.value', 2).and('have.attr', 'max', stockCount);
+        cy.get('form.cart div.quantity span.jcf-btn-dec').should('not.have.class', 'jcf-disabled');
+
+      })
+    });
+
+    it('Verify disable increase button when add stock count', function() {
+      cy.get('div.single-product-detail p.stock').invoke('text').as('stockCount');
+      cy.get('@stockCount').then(text => {
+        let stockCount = parseInt(text.replace(/[^0-9]/g, ''));
+        cy.log(stockCount);
+        cy.get('form.cart div.quantity span.jcf-btn-inc').realHover().wait(1000).should('have.css', 'background-color', 'rgb(245, 140, 13)')
+        cy.get('input[id*=quantity]').clear().type(stockCount - 1);
+        cy.get('form.cart div.quantity span.jcf-btn-inc').click();
+        cy.get('input[id*=quantity]').should('have.value', stockCount);
+        cy.get('form.cart div.quantity span.jcf-btn-inc').should('have.class', 'jcf-disabled');
+
+      })
     });
 
     it('Verify Change the slider image', () => {
@@ -230,7 +251,13 @@ describe('Watanimall add to cart scenario', () => {
         .should('have.css', 'background-color', 'rgb(0, 0, 0)')
         .and('have.css', 'color', 'rgb(255, 255, 255)')
         .click();
-      
+        cy.fixture('product').then( text => { 
+          cy.get(`input[id*=${this.data.productID}]`)
+            .parents('div.cart-item')
+            .find('strong.product-name')
+            .invoke('text')
+            .should('contain', text.productName)
+         })
       cy.totalPrice(this.data.currency);
       cy.getCartCount();
       cy.get('span.backdrop-overlay').should('have.css', 'visibility', 'visible');
