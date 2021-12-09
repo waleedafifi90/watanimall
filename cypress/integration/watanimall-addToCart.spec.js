@@ -21,6 +21,7 @@ describe('Watanimall add to cart scenario', () => {
         .parent()
         .should('have.class', 'current-menu-item')
         .and('contain', this.data.homeTitle);
+      cy.url().should('equal', Cypress.config().baseUrl+'/');
     });
 
     it('Verify the cart is empty', () => {
@@ -57,6 +58,9 @@ describe('Watanimall add to cart scenario', () => {
       cy.get('#main div.category-row div a[href*=monitors]').click();
       cy.url().should('include', 'product-category/monitors');
       cy.get('#main div.shop-header h1').should('contain', this.data.categoryName)
+      cy.get('main nav.woocommerce-breadcrumb').should('contain', this.data.categoryName);
+      cy.title().should('contain', this.data.categoryName);
+      cy.get('div.sort-wrapper form.woocommerce-ordering span.jcf-select-text').should('have.text', this.data.defaultSelection);
 
       cy.get('div.products-row div.product-col').then(items => {
         if(items.length == this.data.itemPerPage) {
@@ -74,7 +78,8 @@ describe('Watanimall add to cart scenario', () => {
       cy.get('div[data-name="monitor_size_in_inches"] span').invoke('text').as('monitorSize');
 
       cy.get('div[data-name="manufacturer"] div[data-value="asus"]').click();
-      
+      cy.url().should('contain', `_manufacturer=${Cypress._.lowerCase(this.data.manufacturerName)}`);
+
       cy.get('@categoryCount').then(ele => {
         cy.get('div.products-row div.product-col').should('have.length', parseFloat(ele.replace(/[()]/g, "").trim()));
       })
@@ -93,12 +98,18 @@ describe('Watanimall add to cart scenario', () => {
       cy.get('div.shop-products-holder div.product-col').should('contain', this.data.manufacturerName);
     });
 
+    it('Verify product count on change monitor size with asus brand', () => {
+      cy.get('div[data-value=27]').click();
+      cy.get('div[data-value=27]').should('have.class', 'checked').children('span').invoke('text').then(text => {
+        cy.get('div.products-row div.product-col').should('have.length', parseFloat(text.replace(/[()]/g, "").trim()))
+      })
+    })
 
     it('Verify soritng the result price from low to high', () => {
       cy.get('div.sort-wrapper form span.jcf-select-orderby').should('be.visible');
       cy.get('div.sort-wrapper form span.jcf-select-orderby').click();
       
-      let url = 'https://watanimall.com/product-category/monitors?orderby=price&_manufacturer=asus';
+      let url = 'https://watanimall.com/product-category/monitors?orderby=price&_manufacturer=asus&_monitor_size_in_inches=27';
       cy.intercept('POST', url).as('asusRequest');
 
       cy.get('div.sort-wrapper form div.jcf-select-drop ul li span[data-index=4]').click();
@@ -109,14 +120,14 @@ describe('Watanimall add to cart scenario', () => {
     it('Verify add the product to cart ', function() {
       
       cy.get('div.products-row div.product-col div.product-price').children().not('del').find('bdi').then(ele => {
-        const unsortedItems = ele.map((index, el) =>  Cypress.$(el).text().substr(1).trim().replace(/,/g, '')).get();
+        const unsortedItems = ele.map((index, el) =>  Cypress.$(el).text().substring(1).trim().replace(/,/g, '')).get();
         const sortedItems = unsortedItems.slice().sort((a, b) => parseFloat(a) - parseFloat(b));
         expect(sortedItems, 'Items are sorted').to.deep.equal(unsortedItems);
       });
 
-      cy.get('a[data-id="107188"]').parents('div.product-item').realHover().children('div.btn-cart-wrap').should('be.visible');
-      cy.get('a[data-id="107188"]').realHover().wait(1000).should('have.css', 'background-color', 'rgb(245, 140, 13)');
-      cy.get('a[data-id="107188"]').click();
+      cy.get('a[data-id="107056"]').parents('div.product-item').realHover().children('div.btn-cart-wrap').should('be.visible');
+      cy.get('a[data-id="107056"]').realHover().wait(1000).should('have.css', 'background-color', 'rgb(245, 140, 13)');
+      cy.get('a[data-id="107056"]').click();
       cy.totalPrice(this.data.currency);
       cy.getCartCount();
       cy.get('div.header-mini-cart a.cart-close').click();
@@ -125,7 +136,7 @@ describe('Watanimall add to cart scenario', () => {
   });
 
   context('Navigate to product details page', () => {
-    it('Verify add the product details for product id: 125434 to fixture', function() {
+    it('Verify add the product details for product id: 106816 to fixture', function() {
       cy.get(`a[data-id="${this.data.productID}"]`).parents('div.product-item').then(ele => {
         cy.writeFile('cypress/fixtures/product.json', {
           'href': `${ele.find('h3.product-name a').attr('href')}`,

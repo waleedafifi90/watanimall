@@ -71,7 +71,8 @@ https://user-images.githubusercontent.com/57403758/145365574-dd021fc7-ed36-4016-
 - Remove the item from the cart based on the ket id
 - Check add to cart button style in product details page
 - Check the slider inside the product page
-
+- Check for category page Breadcrumb, url when filter, and the sort must be on default on page load
+  
 ### Bugs
 - Price format in the cart changed once the user remove an item
 <img width="383" alt="Screen Shot 2021-12-09 at 8 54 10 AM" src="https://user-images.githubusercontent.com/57403758/145349351-5efdd197-b19a-45f8-b4db-5a37699f7f67.png">
