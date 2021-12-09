@@ -34,7 +34,8 @@ cypress/integration/watanimall-addToCart.spec.js
 
 
 
-https://user-images.githubusercontent.com/57403758/145275285-325103c4-d0a5-4d9d-a690-d217475e1f57.mp4
+https://user-images.githubusercontent.com/57403758/145349386-7b67f67a-1532-411f-ad3e-2e3763862e72.mp4
+
 
 
 ### Cypress run test
@@ -72,3 +73,4 @@ https://user-images.githubusercontent.com/57403758/145275285-325103c4-d0a5-4d9d-
 
 ### Bugs
 - Price format in the cart changed once the user remove an item
+<img width="383" alt="Screen Shot 2021-12-09 at 8 54 10 AM" src="https://user-images.githubusercontent.com/57403758/145349351-5efdd197-b19a-45f8-b4db-5a37699f7f67.png">
