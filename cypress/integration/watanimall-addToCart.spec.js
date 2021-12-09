@@ -135,6 +135,7 @@ describe('Watanimall add to cart scenario', () => {
         })
       })
     })
+
     it('Verify navigating to the second product', function() {
       cy.get('a[data-id="107055"]').parents('div.product-item').click();
       cy.fixture('product').then( text => {
@@ -155,7 +156,12 @@ describe('Watanimall add to cart scenario', () => {
     });
 
     it('Verify add the product to the cart', function() {
-      cy.get('button[name="add-to-cart"]').click();
+      cy.get('button[name="add-to-cart"]')
+        .realHover()
+        .wait(1000)
+        .should('have.css', 'background-color', 'rgb(0, 0, 0)')
+        .and('have.css', 'color', 'rgb(255, 255, 255)')
+        .click();
       
       cy.totalPrice(this.data.currency);
       cy.getCartCount();

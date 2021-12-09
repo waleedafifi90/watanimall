@@ -10,8 +10,11 @@ Also there some of the assertion to check the style like the hover
 
 ## Requirentments
 - Node js
-- Cypress
 - Chrome browser
+
+### Dependencies used
+1. [Cypress](https://www.cypress.io/)
+2. [Cypress real events](https://github.com/dmtrKovalenko/cypress-real-events)
   
 ### How to start using this script
 ```javascript
@@ -69,7 +72,7 @@ https://user-images.githubusercontent.com/57403758/145349386-7b67f67a-1532-411f-
 - Check the pagination if it's exists or not when the product count more or less than 45 
 - Check add to cart button hover effect
 - Remove the item from the cart based on the ket id
-
+- Check add to cart button style in product details page
 
 ### Bugs
 - Price format in the cart changed once the user remove an item
