@@ -272,15 +272,6 @@ describe('Watanimall add to cart scenario', () => {
           cy.get(`input[id*=${this.data.productID}]`).should('have.value', item.quantity);
         });
        
-        // cy.fixture('product').then( text => { 
-          // cy.get(`input[id*=${this.data.productID}]`)
-          //   .parents('div.cart-item')
-          //   .find('strong.product-name')
-          //   .invoke('text')
-          //   .should('contain', text.productName);
-
-        //     cy.get(`input[id*=${this.data.productID}]`).should('have.value', this.productQuantity);
-        //  })
       cy.totalPrice(this.data.currency);
       cy.getCartCount();
       cy.get('span.backdrop-overlay').should('have.css', 'visibility', 'visible');
@@ -291,6 +282,7 @@ describe('Watanimall add to cart scenario', () => {
         // .realHover()
         // .wait(1000)
         // .should('have.css', 'color', 'rgb(245, 140, 13)');
+      cy.get(`div.cart-item a[data-key="${this.data.removeDataKey}"]`).should('not.exist');
       cy.totalPrice(this.data.currency);
       cy.get('div.loader-wrap').should('have.css', 'visibility', 'visible');
       cy.get('div.header-mini-cart a.cart-close').click();
