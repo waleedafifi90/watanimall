@@ -229,8 +229,19 @@ describe('Watanimall add to cart scenario', () => {
         cy.get('input[id*=quantity]').clear().type(stockCount - 1);
         cy.get('form.cart div.quantity span.jcf-btn-inc').click();
         cy.get('input[id*=quantity]').should('have.value', stockCount);
-        cy.get('form.cart div.quantity span.jcf-btn-inc').should('have.class', 'jcf-disabled');
 
+        cy.get('form.cart div.quantity span.jcf-btn-inc').should('have.class', 'jcf-disabled');
+      })
+      cy.get('div.single-product-detail').then( $item => {
+        let product = {
+          "productName": $item.find('h1.product_title').text(),
+          "productPrice": $item.find('bdi').text(),
+          "quantity": $item.find('input[id*=quantity]').val()
+        }
+        cy.task('setProductData', {
+          name: 'product',
+          value: product,
+        })
       })
     });
 
@@ -251,13 +262,25 @@ describe('Watanimall add to cart scenario', () => {
         .should('have.css', 'background-color', 'rgb(0, 0, 0)')
         .and('have.css', 'color', 'rgb(255, 255, 255)')
         .click();
-        cy.fixture('product').then( text => { 
+
+        cy.task('getProductData', 'product').then((item) => {
           cy.get(`input[id*=${this.data.productID}]`)
             .parents('div.cart-item')
             .find('strong.product-name')
             .invoke('text')
-            .should('contain', text.productName)
-         })
+            .should('contain', item.productName);
+          cy.get(`input[id*=${this.data.productID}]`).should('have.value', item.quantity);
+        });
+       
+        // cy.fixture('product').then( text => { 
+          // cy.get(`input[id*=${this.data.productID}]`)
+          //   .parents('div.cart-item')
+          //   .find('strong.product-name')
+          //   .invoke('text')
+          //   .should('contain', text.productName);
+
+        //     cy.get(`input[id*=${this.data.productID}]`).should('have.value', this.productQuantity);
+        //  })
       cy.totalPrice(this.data.currency);
       cy.getCartCount();
       cy.get('span.backdrop-overlay').should('have.css', 'visibility', 'visible');

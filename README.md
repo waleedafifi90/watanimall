@@ -1,7 +1,7 @@
 ![Cypress.io](https://miro.medium.com/max/7200/1*Jkb_tsMBOvL6wQ8bzldu8Q.png)
 # watanimall
 
-[![waleedafifi90 - watanimall](https://img.shields.io/static/v1?label=waleedafifi90&message=watanimall&color=blue&logo=github)](https://github.com/waleedafifi90/watanimall "Go to GitHub repo") [![stars - watanimall](https://img.shields.io/github/stars/waleedafifi90/watanimall?style=social)](https://github.com/waleedafifi90/watanimall) [![License](https://img.shields.io/badge/License-MIT-blue)](#license) ![Coverage](https://img.shields.io/static/v1?label=Coverage&message=94%&color=green&logo=github-actions&logoColor=white)  ![Test Cases](https://img.shields.io/badge/Total_Test-22-blue.svg?style=flat) ![Test Pass - 19](https://img.shields.io/badge/Test_Pass-19-2ea44f) ![Test Fail - 3](https://img.shields.io/badge/Test_Fail-3-A13333)
+[![waleedafifi90 - watanimall](https://img.shields.io/static/v1?label=waleedafifi90&message=watanimall&color=blue&logo=github)](https://github.com/waleedafifi90/watanimall "Go to GitHub repo") [![stars - watanimall](https://img.shields.io/github/stars/waleedafifi90/watanimall?style=social)](https://github.com/waleedafifi90/watanimall) [![License](https://img.shields.io/badge/License-MIT-blue)](#license) ![Coverage](https://img.shields.io/static/v1?label=Coverage&message=94%&color=green&logo=github-actions&logoColor=white)  ![Test Cases](https://img.shields.io/badge/Total_Test-22-blue.svg?style=flat) ![Test Pass - 20](https://img.shields.io/badge/Test_Pass-20-2ea44f) ![Test Fail - 2](https://img.shields.io/badge/Test_Fail-2-A13333)
 
 
 
@@ -76,9 +76,13 @@ https://user-images.githubusercontent.com/57403758/145365574-dd021fc7-ed36-4016-
 - Check for the name of the product that been added to the cart ❌
 - Check for the breadcrumb in the product details page ❌
 - Check manufacture in details page
-- Check the name of the product add to cart from details page ❌
+- Check the name of the product name, price, and quantity been added to cart from details page
 - Check the stock count and compare it with the max value of the quantity
-  
+
+### Cypress Tasks
+1. setProductData(item, Value)
+2. getProductData(item)
+
 ### Bugs
 - Price format in the cart changed once the user remove an item
 <img width="383" alt="Screen Shot 2021-12-09 at 8 54 10 AM" src="https://user-images.githubusercontent.com/57403758/145349351-5efdd197-b19a-45f8-b4db-5a37699f7f67.png">
