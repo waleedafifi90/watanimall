@@ -25,6 +25,10 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 import "cypress-real-events/support";
+import {MiniCartModal} from '../pageObjectModel/miniCart/page';
+
+const mCart = new MiniCartModal();
+
 
 cy.formatMoney = (number, decPlaces = 2, decSep = '.', thouSep = ',') => {
   decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
@@ -89,4 +93,28 @@ Cypress.Commands.add('afterBeforeSelector', (sel, pseudo) => {
   cy.get(sel).then(el => {
     expect(document.querySelector(el), `:${sel}`).to.have.css('background-color', backColor);
   })
+})
+
+
+
+/**
+ * Refactor using Page Object Model
+ */
+
+ Cypress.Commands.add('getCartCountPOM', () => {
+  mCart.actions.cartCounterText();
+  mCart.items.miniCartBody().then(item => {
+    let cartItem = item.find('div.cart-item').length;
+    let counter = 0;
+    if(cartItem) {
+      mCart.items.miniCartItem().then(item => {      
+        for(let i = 0; i < item.length; i++) {
+          counter += parseInt(item.find('input.cart_qty')[i].value);
+        }
+      })
+    }
+    cy.get('@cartCount').then(text => {
+      expect(parseInt(text)).to.equal(counter);
+    });
+  });
 })
