@@ -54,8 +54,13 @@ export class CategoryPageTests {
     return this.items.productPrices();
   }
 
-  productButtonsWrapper() {
-    this.items.productColumnButtonWrapper()
+  productButtonsWrapper(product) {
+    this.items.productColumnButtonWrapper(product)
         .should('be.visible');
+  }
+
+  addToCartOnHoverButton(product) {
+    this.items.addToCartOnHoverButton(product)
+        .should('have.css', 'background-color', 'rgb(245, 140, 13)')
   }
 }

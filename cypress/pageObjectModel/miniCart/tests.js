@@ -15,4 +15,14 @@ export class MiniCartModalTests {
     this.items.miniCart()
         .should('not.be.visible');
   }
+
+  miniCartTotalPrice(total) {
+    this.items.miniCartTotal()
+        .should('have.text', total)
+  }
+
+  checkMiniCartOverlay() {
+    this.items.overlayBackground()
+        .should('have.css', 'visibility', 'visible');
+  }
 }

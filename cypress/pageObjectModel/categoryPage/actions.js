@@ -41,8 +41,24 @@ export class CategoryPageActions {
         .click();
   }
 
-  prpductColumnAction() {
-    this.items.productColumnParent()
+  prpductColumnAction(product) {
+    this.items.productColumnParent(product)
         .realHover();
+  }
+
+  addToCartOnHoverButtonAction(product) {
+    this.items.addToCartOnHoverButton(product)
+        .realHover()
+        .wait(1000);
+  }
+
+  addProductToCart(product) {
+    this.items.addToCartOnHoverButton(product)
+        .click();
+  }
+
+  openProductPage(product) {
+    this.items.productColumnParent(product)
+        .click();
   }
 }

@@ -60,11 +60,15 @@ export class CategoryPageItems {
     return cy.get('div.products-row div.product-col div.product-price').children().not('del').find('bdi');
   }
 
-  productColumnParent() {
-    return cy.get('a[data-id="107056"]').parents('div.product-item');
+  productColumnParent(product) {
+    return cy.get(`a[data-id="${product}"]`).parents('div.product-item');
   }
 
-  productColumnButtonWrapper() {
-    return cy.get('a[data-id="107056"]').parents('div.product-item').children('div.btn-cart-wrap');
+  productColumnButtonWrapper(product) {
+    return cy.get(`a[data-id="${product}"]`).parents('div.product-item').children('div.btn-cart-wrap');
+  }
+
+  addToCartOnHoverButton(product) {
+    return cy.get(`a[data-id="${product}"]`);
   }
 }

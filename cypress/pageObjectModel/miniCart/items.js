@@ -26,4 +26,8 @@ export class MiniCartModalItems {
   miniCartTotal() {
     return cy.get('span.sub-total-amount');
   }
+
+  overlayBackground() {
+    return cy.get('span.backdrop-overlay');
+  }
 }
